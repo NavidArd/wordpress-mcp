@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin name:       WordPress MCP
- * Description:       A plugin to integrate WordPress with Model Context Protocol (MCP), providing AI-accessible interfaces to WordPress data and functionality through standardized tools, resources, and prompts. Enables AI assistants to interact with posts, users, site settings, and WooCommerce data.
+ * Description:       A plugin to integrate WordPress with Model Context Protocol (MCP), providing AI-accessible interfaces to WordPress data and functionality through standardized tools, resources, and prompts. Enables AI assistants to interact with posts, users, site settings, WooCommerce data, theme management.
  * Version:           0.2.3
  * Requires at least: 6.4
  * Requires PHP:      8.0
- * Author:            Automattic AI, Ovidiu Galatan <ovidiu.galatan@a8c.com>
+ * Author:            Automattic AI, Ovidiu Galatan <ovidiu.galatan@a8c.com>, MassiveShift
  * Author URI:        https://automattic.com
  * License:           GPL-2.0-or-later
  * License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
@@ -66,6 +66,10 @@ function init_wordpress_mcp() {
 	// Initialize the JWT authentication.
 	new JwtAuth();
 }
+
+add_action( 'plugins_loaded', function() {
+    new \Automattic\WordpressMcp\Tools\McpThemeTools();
+}, 11 ); // Priority 11 to run after main init
 
 // Initialize the plugin on plugins_loaded to ensure all dependencies are available.
 add_action( 'plugins_loaded', 'init_wordpress_mcp' );
